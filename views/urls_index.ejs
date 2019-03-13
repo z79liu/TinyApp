@@ -17,6 +17,7 @@
               <li><%= element %> <%= urls[element] %>
 
                   <form method="POST" action="/urls/<%= element %>/delete">
+                    <a href = "http://localhost:8080/urls/<%= element %>"> Edit </a>
                     <button type ="submit">Delete</button>
                   </form>
               </li>

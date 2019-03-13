@@ -7,12 +7,20 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   <title>TinyApp</b></title>
-  <h1><% include ./partials/_header %></h1>
+
 </head>
 <body style="font-size:20px; padding:50px;">
-    <h2>TinyURL for <%= longURL %> is:
+  <h1><% include ./partials/_header %></h1>
+    <h2>Currently <%= longURL %> is shortened to:
       <br>
     <%= shortURL %></h2>
+     <form method="POST" action="/urls/<%= shortURL %>">
+        <div class="form-group mb-2">
+          <label for="longURL">Update existing URL:</label>
+          <input class="form-control" type="text" name="longURL" placeholder="Enter a New URL" style="width: 300px; margin: 1em">
+          <button type="submit" class="btn btn-primary">Update URL</button>
+        </div>
+      </form>
     <a href = "http://localhost:8080/urls"> Return</a>
 </body>
 </html>
