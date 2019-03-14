@@ -4,27 +4,27 @@
 <div class="container-fluid">
     <div class="navbar-header">
         <h1><b>TinyApp</b> </h1>
-        <ul class="nav navbar-nav">
-            <li><a href="/urls">Home</a></li>
-            <li><a href="/about">About</a></li>
-        </ul>
-    </div>
-    <% if (username){ %>
+
+    <% if (user){ %>
       <form method="POST" action="/logout">
         <div class="form-group mb-2">
-          <label for="username"><%= username %></label>
-          <button type="Logout" class="btn btn-danger">Logout </button>
+          <label for="userId"><%= user.email %></label>
+          <button type="submit" class="btn btn-danger">Logout </button>
         </div>
       </form>
      <% } else { %>
-      <form method="POST" action="/login">
+      <form method="GET" action="/register">
         <div class="form-group mb-2">
-          <label for="username">Enter a login:</label>
-          <input class="form-control" type="text" name="username" placeholder="Enter a username" style="width: 300px; margin: 1em">
+          <button type="submit" class="btn btn-danger">Register </button>
+        </div>
+      </form>
+      <form method="GET" action="/login">
+        <div class="form-group mb-2">
           <button type="submit" class="btn btn-danger">Login </button>
         </div>
       </form>
      <% } %>
+     </div>
 
 </div>
 </nav>
