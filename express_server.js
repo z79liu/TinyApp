@@ -12,9 +12,9 @@ var PORT = 8080; // default port 8080
 app.set("view engine", "ejs")
 
 
-var urlDatabase = {
-  "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com"
+const urlDatabase = {
+  b6UTxQ: { longURL: "https://www.tsn.ca", userID: "aJ48lW" },
+  i3BoGr: { longURL: "https://www.google.ca", userID: "aJ48lW" }
 };
 
 const users = {
@@ -70,23 +70,28 @@ app.get("/urls/new", (req, res) => {
 app.get("/urls/:shortURL", (req, res) => {
   let templateVars = {
     shortURL: req.params.shortURL,
-    longURL: urlDatabase[req.params.shortURL],
+    longURL: urlDatabase[req.params.shortURL].longURL,
     user: users[req.cookies.userId]
   };
   res.render("urls_show", templateVars);
 });
 
+// const urlDatabase = {
+//   b6UTxQ: { longURL: "https://www.tsn.ca", userID: "aJ48lW" },
+//   i3BoGr: { longURL: "https://www.google.ca", userID: "aJ48lW" }
+// };
 
 app.post("/urls", (req, res) => {
   var short = generateRandomString()
-  urlDatabase[short] = req.body.longURL;  // Log the POST request body to the console
+  urlDatabase[short] = {longURL: req.body.longURL, userID: req.cookies.userId};
+   // Log the POST request body to the console
   res.redirect(`/urls/${short}`);         // Respond with 'Ok' (we will replace this)
 });
 
 //takes user to the actual long URL from the shortURl
 app.get("/u/:shortURL", (req, res) => {
   const shortURL = req.params.shortURL
-  const longURL = urlDatabase[shortURL]
+  const longURL = urlDatabase[shortURL].longURL
   res.redirect(longURL);
 });
 
@@ -133,7 +138,10 @@ app.post("/logout", (req, res) => {
 });
 
 app.get("/register", (req, res) => {
-  res.render("urls_register", { error:  undefined })
+  let templateVars = {user: users[req.cookies.userId],
+                      error: undefined  };
+
+  res.render("urls_register", templateVars)
 });
 
 
@@ -150,7 +158,7 @@ app.post("/register", (req, res) => {
   if (!req.body.email || !req.body.password ) {
     res.render("urls_register",{ error: 'Please fill in all input fields'})
   } else if (dupEmail(req.body.email)){
-    res.render("urls_register",{ error: 'That email already exist'})
+    res.render("urls_register",{error: 'That email already exist'})
   } else {
     var userId = generateRandomString()
     let templateVars = { id: userId,

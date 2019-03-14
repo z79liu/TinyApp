@@ -5,7 +5,7 @@
     <div class="navbar-header">
         <h1><b>TinyApp</b> </h1>
 
-    <% if (user){ %>
+    <% if (locals.user){ %>
       <form method="POST" action="/logout">
         <div class="form-group mb-2">
           <label for="userId"><%= user.email %></label>

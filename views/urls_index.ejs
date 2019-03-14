@@ -14,7 +14,7 @@
     <h2>My URLs</h2>
     <ul>
        <% for (element in  urls){ %>
-              <li><%= element %> <%= urls[element] %>
+              <li><%= element %> <%= urls[element].longURL %>
 
                   <form method="POST" action="/urls/<%= element %>/delete">
                     <a href = "http://localhost:8080/urls/<%= element %>"> Edit </a>
