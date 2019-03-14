@@ -57,10 +57,14 @@ app.get("/about", (req, res) => {
 });
 
 app.get("/urls/new", (req, res) => {
+  if (req.cookies.userId === undefined) {
+    res.redirect("/login")
+  } else {
   let templateVars = { urls: urlDatabase,
     user: users[req.cookies.userId]
   };
   res.render("urls_new", templateVars);
+}
 });
 
 app.get("/urls/:shortURL", (req, res) => {
@@ -132,18 +136,6 @@ app.get("/register", (req, res) => {
   res.render("urls_register", { error:  undefined })
 });
 
-// const users = {
-//   "userRandomID": {
-//     id: "userRandomID",
-//     email: "user@example.com",
-//     password: "purple-monkey-dinosaur"
-//   },
-//  "user2RandomID": {
-//     id: "user2RandomID",
-//     email: "user2@example.com",
-//     password: "dishwasher-funk"
-//   }
-// }
 
 function dupEmail(emails){
   for (person in users){
