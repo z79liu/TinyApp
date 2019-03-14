@@ -129,11 +129,7 @@ app.post("/logout", (req, res) => {
 });
 
 app.get("/register", (req, res) => {
-   let templateVars = { urls: urlDatabase,
-    user: users[req.cookies.userId],
-    error: undefined
-  };
-  res.render("urls_register", templateVars)
+  res.render("urls_register", { error:  undefined })
 });
 
 // const users = {
