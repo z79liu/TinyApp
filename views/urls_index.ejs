@@ -11,11 +11,15 @@
   <a href = "http://localhost:8080/urls/new" >Create New TinyUrl</a>
 </head>
 <body style="font-size:20px; padding:50px;">
-    <h2>My URLs</h2>
+    <% if (!user){ %>
+    <div class="form-group mb-2">
+     <%= error %>
+   </div>
+    <% } else { %>
+    <h2>My URLs </h2>
     <ul>
-       <% for (element in  urls){ %>
-              <li><%= element %> <%= urls[element].longURL %>
-
+      <% for (var element in urls) { %>
+              <li> <%= element %> , <%= urls[element] %>
                   <form method="POST" action="/urls/<%= element %>/delete">
                     <a href = "http://localhost:8080/urls/<%= element %>"> Edit </a>
                     <button type ="submit">Delete</button>
@@ -24,6 +28,7 @@
 
         <%  } %>
     </ul>
+    <%  } %>
 </body>
 </html>
 
