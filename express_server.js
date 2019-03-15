@@ -141,17 +141,17 @@ app.post("/login", (req, res) => {
     res.status(403).send("This mail does not exist in the system");
   } else {
     for (userid in users){
-      if (users[userid].email === req.body.email &&
-        bcrypt.compareSync(req.body.password, users[userid].password)
-        ){
-          req.session.userId = userid
+      if (users[userid].email === req.body.email) {
+        if(bcrypt.compareSync(req.body.password, users[userid].password))
+        {req.session.userId = userid
           console.log({userid})
           res.redirect("/urls")
-      } else {
+        } else {
         res.status(403).send("This password does not match the email");
+          }
       }
-    }
   }
+}
 });
 
 //logout will clear the current active cookie
