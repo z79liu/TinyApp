@@ -1,5 +1,7 @@
 var express = require("express");
 var cookieParser = require('cookie-parser')
+const bcrypt = require('bcrypt');
+
 var app = express();
 var PORT = 8080; // default port 8080
 app.set("view engine", "ejs")
@@ -118,7 +120,8 @@ app.post("/login", (req, res) => {
   } else {
     for (userid in users){
       if (users[userid].email === req.body.email &&
-        users[userid].password === req.body.password){
+        bcrypt.compareSync(req.body.password, users[userid].password)
+        ){
           res.cookie("userId",userid)
           res.redirect("/urls")
       }
@@ -149,10 +152,11 @@ app.post("/register", (req, res) => {
   } else if (dupEmail(req.body.email)){
     res.render("urls_register",{error: 'That email already exist'})
   } else {
+    const hashedPassword = bcrypt.hashSync(req.body.password, 10);
     var userId = generateRandomString()
     let templateVars = { id: userId,
       email: req.body.email,
-      password: req.body.password
+      password: hashedPassword
     };
     users[userId] = templateVars
     res.cookie("userId",userId);
